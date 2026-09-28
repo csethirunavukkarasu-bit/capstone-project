@@ -1,0 +1,20 @@
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# Java / Maven build output and local dependency cache
+**/target/
+**/.m2/
+
+# Node dependencies and generated output
+**/node_modules/
+**/dist/
+**/build/
+
+# IDE and operating system files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
