@@ -1,0 +1,14 @@
+[INFO]    org.springframework.boot:spring-boot-starter-web:jar:3.2.5:compile -- module spring.boot.starter.web [auto]
+[INFO]    org.springframework.boot:spring-boot-starter-data-jpa:jar:3.2.5:compile -- module spring.boot.starter.data.jpa [auto]
+[INFO]    org.springframework.boot:spring-boot-starter-validation:jar:3.2.5:compile -- module spring.boot.starter.validation [auto]
+[INFO]    org.springframework.boot:spring-boot-starter-actuator:jar:3.2.5:compile -- module spring.boot.starter.actuator [auto]
+[INFO]    org.springframework.boot:spring-boot-starter-security:jar:3.2.5:compile -- module spring.boot.starter.security [auto]
+[INFO]    io.jsonwebtoken:jjwt-api:jar:0.12.5:compile -- module jjwt.api (auto)
+[INFO]    io.jsonwebtoken:jjwt-impl:jar:0.12.5:runtime -- module jjwt.impl (auto)
+[INFO]    io.jsonwebtoken:jjwt-jackson:jar:0.12.5:runtime -- module jjwt.jackson (auto)
+[INFO]    org.postgresql:postgresql:jar:42.6.2:runtime -- module org.postgresql.jdbc [auto]
+[INFO]    com.h2database:h2:jar:2.2.224:runtime -- module com.h2database [auto]
+[INFO]    org.projectlombok:lombok:jar:1.18.32:compile (optional) -- module lombok
+[INFO]    io.github.cdimascio:dotenv-java:jar:3.0.0:compile -- module io.github.cdimascio.dotenv.java
+[INFO]    org.springframework.boot:spring-boot-starter-test:jar:3.2.5:test -- module spring.boot.starter.test [auto]
+[INFO] Finished at: 2026-08-13T09:58:16+05:30
