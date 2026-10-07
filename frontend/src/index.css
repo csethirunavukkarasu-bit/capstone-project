@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Syne:wght@700;800&family=Bungee&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   PURPLE & BLUE ADAPTIVE THEME VARIABLES
+   ========================================================================== */
+
+:root, :root[data-theme="dark"] {
+  --bg-canvas: #0B0A17;
+  --bg-surface: #121029;
+  --bg-card: #181537;
+  --bg-card-hover: #211D47;
+  --bg-header: rgba(18, 16, 41, 0.85);
+  --bg-glass: rgba(24, 21, 55, 0.75);
+  --bg-input: #120F2A;
+  
+  --text-primary: #F4F1FF;
+  --text-secondary: #AAA4CF;
+  --text-muted: #6E6898;
+  
+  --border-color: rgba(139, 92, 246, 0.2);
+  --border-hover: rgba(139, 92, 246, 0.5);
+  --border-glow: rgba(59, 130, 246, 0.4);
+  
+  --shadow-main: 0 12px 35px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 8px 24px rgba(5, 4, 15, 0.4);
+  --glow-purple: 0 0 25px rgba(139, 92, 246, 0.4);
+  --glow-cyan: 0 0 25px rgba(6, 182, 212, 0.4);
+
+  --gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #06B6D4 100%);
+  --gradient-secondary: linear-gradient(135deg, #A855F7 0%, #6366F1 100%);
+  --gradient-funky: linear-gradient(135deg, #EC4899 0%, #8B5CF6 50%, #3B82F6 100%);
+  --gradient-story: linear-gradient(45deg, #EC4899, #8B5CF6, #06B6D4, #3B82F6);
+  --gradient-card-header: linear-gradient(90deg, rgba(139,92,246,0.15) 0%, rgba(59,130,246,0.05) 100%);
+  
+  --accent-purple: #8B5CF6;
+  --accent-blue: #3B82F6;
+  --accent-cyan: #06B6D4;
+  --accent-pink: #EC4899;
+}
+
+:root[data-theme="light"] {
+  --bg-canvas: #F4F5FD;
+  --bg-surface: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8F7FF;
+  --bg-header: rgba(255, 255, 255, 0.88);
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --bg-input: #EFF0FA;
+  
+  --text-primary: #191438;
+  --text-secondary: #585180;
+  --text-muted: #958EA9;
+  
+  --border-color: rgba(139, 92, 246, 0.16);
+  --border-hover: rgba(139, 92, 246, 0.4);
+  --border-glow: rgba(59, 130, 246, 0.35);
+  
+  --shadow-main: 0 12px 35px rgba(139, 92, 246, 0.08);
+  --shadow-card: 0 6px 20px rgba(139, 92, 246, 0.06);
+  --glow-purple: 0 0 20px rgba(139, 92, 246, 0.22);
+  --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.22);
+
+  --gradient-primary: linear-gradient(135deg, #7C3AED 0%, #2563EB 50%, #0284C7 100%);
+  --gradient-secondary: linear-gradient(135deg, #9333EA 0%, #4F46E5 100%);
+  --gradient-funky: linear-gradient(135deg, #DB2777 0%, #7C3AED 50%, #2563EB 100%);
+  --gradient-story: linear-gradient(45deg, #DB2777, #7C3AED, #0284C7, #2563EB);
+  --gradient-card-header: linear-gradient(90deg, rgba(139,92,246,0.08) 0%, rgba(59,130,246,0.02) 100%);
+  
+  --accent-purple: #7C3AED;
+  --accent-blue: #2563EB;
+  --accent-cyan: #0284C7;
+  --accent-pink: #DB2777;
+}
+
+/* ==========================================================================
+   GLOBAL BASE STYLES
+   ========================================================================== */
+
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background-color 0.35s ease, color 0.35s ease;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+input, textarea {
+  outline: none;
+  font-family: inherit;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-purple);
+  border-radius: 99px;
+  opacity: 0.7;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* ==========================================================================
+   FUNKY & UTILITY STYLES
+   ========================================================================== */
+
+.purple-blue-gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.funky-gradient-text {
+  background: var(--gradient-funky);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+}
+
+.glow-on-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.glow-on-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-purple);
+  border-color: var(--border-hover);
+}
+
+.funky-badge {
+  background: var(--gradient-secondary);
+  color: #FFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.avatar-story-ring {
+  padding: 2.5px;
+  background: var(--gradient-story);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background-size: 200% 200%;
+  animation: storyGradientSpin 4s linear infinite;
+}
+.avatar-story-ring:hover {
+  transform: scale(1.08) rotate(3deg);
+}
+
+@keyframes storyGradientSpin {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Micro-animations */
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4) rotate(-10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.heart-pop {
+  animation: heartPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
+  50% { box-shadow: 0 0 28px rgba(6, 182, 212, 0.6); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 3s infinite;
+}
