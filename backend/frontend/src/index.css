@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pink-500: #ec4899;
+  --color-pink-600: #db2777;
+  --color-pink-700: #be185d;
+}
+
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   REELIX BRANDING & ANIMATION SYSTEM
+   ========================================================================== */
+
+.font-reelix {
+  font-family: 'Outfit', 'Syne', sans-serif;
+}
+
+.font-reelix-bungee {
+  font-family: 'Bungee', sans-serif;
+}
+
+.reelix-gradient-text {
+  background: linear-gradient(135deg, #FF2A85 0%, #8A2BE2 50%, #00F2FE 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.reelix-gradient-bg {
+  background: linear-gradient(135deg, #FF2A85 0%, #8A2BE2 50%, #00F2FE 100%);
+}
+
+.reelix-glow {
+  filter: drop-shadow(0 0 12px rgba(255, 42, 133, 0.45)) drop-shadow(0 0 24px rgba(138, 43, 226, 0.35));
+}
+
+.reelix-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: reelixLetterPop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.reelix-letter-delay-0 { animation-delay: 0.05s; }
+.reelix-letter-delay-1 { animation-delay: 0.12s; }
+.reelix-letter-delay-2 { animation-delay: 0.19s; }
+.reelix-letter-delay-3 { animation-delay: 0.26s; }
+.reelix-letter-delay-4 { animation-delay: 0.33s; }
+.reelix-letter-delay-5 { animation-delay: 0.40s; }
+
+.reelix-logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+}
+
+.reelix-logo-wrapper:hover {
+  transform: scale(1.07) rotate(-1.5deg);
+  filter: drop-shadow(0 0 16px rgba(255, 42, 133, 0.6)) drop-shadow(0 0 32px rgba(0, 242, 254, 0.4));
+}
+
+.reelix-logo-wrapper:active {
+  transform: scale(0.96) rotate(1deg);
+}
+
+.reelix-sparkle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  animation: reelixSparkleFloat 2s ease-in-out infinite alternate;
+}
+
+@keyframes reelixLetterPop {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.3) rotate(-12deg);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.18) rotate(4deg);
+    filter: blur(0);
+  }
+  80% {
+    transform: translateY(2px) scale(0.95) rotate(-1.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes reelixSparkleFloat {
+  0% {
+    transform: translateY(0) scale(0.7);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-8px) scale(1.3);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-3px) scale(0.9);
+    opacity: 0.4;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .reelix-letter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .reelix-logo-wrapper {
+    transition: none !important;
+  }
+  .reelix-logo-wrapper:hover {
+    transform: none !important;
+  }
+  .reelix-sparkle {
+    animation: none !important;
+  }
+}
+
