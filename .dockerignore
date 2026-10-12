@@ -1,0 +1,15 @@
+.git
+.gitignore
+.github
+**/.m2
+**/target
+**/node_modules
+**/dist
+**/.vscode
+**/.idea
+**/*.bat
+**/*.ps1
+.env
+.env.*
+!*.example
+uploads/

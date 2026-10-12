@@ -24,13 +24,39 @@ public class DatabaseConfig {
     @Value("${spring.datasource.password:postgres}")
     private String dbPassword;
 
+    @Value("${DATABASE_URL:#{null}}")
+    private String renderDatabaseUrl;
+
     @Value("${USE_IN_MEMORY_DB:false}")
     private boolean useInMemoryDb;
 
     @Bean
     @Primary
     public DataSource dataSource() {
-        if (useInMemoryDb || isDefaultPlaceholder(dbUrl)) {
+        String effectiveUrl = renderDatabaseUrl != null && !renderDatabaseUrl.isBlank() ? renderDatabaseUrl.trim() : dbUrl;
+        String effectiveUser = dbUsername;
+        String effectivePass = dbPassword;
+
+        // Automatically convert Render/Supabase postgres:// or postgresql:// to JDBC format
+        if (effectiveUrl != null && (effectiveUrl.startsWith("postgres://") || effectiveUrl.startsWith("postgresql://"))) {
+            try {
+                java.net.URI uri = new java.net.URI(effectiveUrl);
+                if (uri.getUserInfo() != null) {
+                    String[] userInfo = uri.getUserInfo().split(":", 2);
+                    effectiveUser = userInfo[0];
+                    if (userInfo.length > 1) {
+                        effectivePass = userInfo[1];
+                    }
+                }
+                int port = uri.getPort() > 0 ? uri.getPort() : 5432;
+                String query = uri.getQuery() != null ? "?" + uri.getQuery() : "?sslmode=require";
+                effectiveUrl = "jdbc:postgresql://" + uri.getHost() + ":" + port + uri.getPath() + query;
+            } catch (Exception e) {
+                log.warn("Failed to parse DATABASE_URL as URI, using as-is: {}", e.getMessage());
+            }
+        }
+
+        if (useInMemoryDb || isDefaultPlaceholder(effectiveUrl)) {
             log.info("Using embedded H2 database mode (USE_IN_MEMORY_DB=true or placeholder DB URL detected).");
             return DataSourceBuilder.create()
                     .driverClassName("org.h2.Driver")
@@ -40,12 +66,12 @@ public class DatabaseConfig {
                     .build();
         }
 
-        log.info("Connecting to Supabase PostgreSQL database at URL: {}", maskUrl(dbUrl));
+        log.info("Connecting to PostgreSQL database at URL: {}", maskUrl(effectiveUrl));
         return DataSourceBuilder.create()
                 .driverClassName("org.postgresql.Driver")
-                .url(dbUrl)
-                .username(dbUsername)
-                .password(dbPassword)
+                .url(effectiveUrl)
+                .username(effectiveUser)
+                .password(effectivePass)
                 .build();
     }
 

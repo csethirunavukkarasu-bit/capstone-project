@@ -3,7 +3,8 @@ import type { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axio
 import type { ApiResponse, AuthResponse, LoginRequest, RegisterRequest, UpdateProfileRequest, CommentRequest, ViewTrackRequest, UserDto, UserProfileDto, VideoDto, CommentDto, EngagementPredictionDto, HealthResponse, Page } from '../types';
 
 
-const API_BASE = '/api';
+const rawBaseUrl = import.meta.env.VITE_API_URL;
+const API_BASE = rawBaseUrl ? `${rawBaseUrl.replace(/\/+$/, '')}/api` : '/api';
 
 export const api = axios.create({
   baseURL: API_BASE,

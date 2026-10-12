@@ -1,0 +1,42 @@
+services:
+  # ----------------------------------------------------------------------------
+  # Reelix Backend Web Service (Render Docker Deployment)
+  # ----------------------------------------------------------------------------
+  - type: web
+    name: reelix-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: oregon
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: USE_IN_MEMORY_DB
+        value: "false"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: reelix-db
+          property: connectionString
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: SUPABASE_BUCKET
+        value: videos
+      - key: JWT_SECRET
+        generateValue: true
+
+databases:
+  # ----------------------------------------------------------------------------
+  # Reelix Managed PostgreSQL Database
+  # ----------------------------------------------------------------------------
+  - name: reelix-db
+    plan: free
+    databaseName: shortvideodb
+    user: postgres
+    region: oregon

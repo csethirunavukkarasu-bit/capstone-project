@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------------------
+  # PostgreSQL Database Service
+  # ----------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: reelix-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: shortvideodb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d shortvideodb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------------------
+  # Reelix Spring Boot Backend Service (Java 21 + FFmpeg)
+  # ----------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: reelix-backend
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 8080
+      SPRING_PROFILES_ACTIVE: prod
+      USE_IN_MEMORY_DB: "false"
+      DATABASE_URL: jdbc:postgresql://postgres:5432/shortvideodb
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SUPABASE_URL: ${SUPABASE_URL:-https://example.supabase.co}
+      SUPABASE_KEY: ${SUPABASE_KEY:-example-anon-key}
+      SUPABASE_BUCKET: ${SUPABASE_BUCKET:-videos}
+      JWT_SECRET: ${JWT_SECRET:-capstoneSecretKeyMustBeAtLeast32BytesLongForSecurity}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ----------------------------------------------------------------------------
+  # Reelix Frontend Web Service (Vite React + Nginx)
+  # ----------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: reelix-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "5173:80"
+
+volumes:
+  postgres_data:

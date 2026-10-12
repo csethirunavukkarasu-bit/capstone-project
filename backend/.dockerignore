@@ -1,0 +1,15 @@
+target/
+.m2/
+.git/
+.gitignore
+.env
+.env.*
+!*.example
+*.bat
+*.ps1
+frontend/
+node_modules/
+.vscode/
+.idea/
+*.md
+uploads/
