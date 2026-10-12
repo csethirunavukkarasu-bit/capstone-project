@@ -15,7 +15,7 @@ RUN mvn dependency:go-offline -B -q || true
 
 # Copy source code and build production jar
 COPY src ./src
-RUN mvn clean package -DskipTests -B -q
+RUN mvn clean package -DskipTests -B
 
 # ------------------------------------------------------------------------------
 # Stage 2: Minimal Production Runtime with FFmpeg & Security Hardening
@@ -31,7 +31,7 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 WORKDIR /app
 
 # Copy executable jar from builder stage
-COPY --from=builder /app/target/*.jar /app/app.jar
+COPY --from=builder /app/target/app.jar /app/app.jar
 
 # Ensure proper permissions for the application user
 RUN chown -R appuser:appgroup /app
